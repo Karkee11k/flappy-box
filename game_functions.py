@@ -4,6 +4,7 @@ import sys
 from game_stats import GameStats
 from transition import GameTransition
 
+
 def checkEvents(stats: GameStats, transition: GameTransition) -> None:
     """Responds to events."""
     for event in pygame.event.get():
@@ -12,8 +13,9 @@ def checkEvents(stats: GameStats, transition: GameTransition) -> None:
         if event.type == pygame.KEYDOWN:
             checkKeydowns(event, stats, transition)
 
-def checkKeydowns(event, stats: GameStats, transition: GameTransition):
-    """Responds to key press events."""
+
+def checkKeydowns(event: pygame.event.EventType, stats: GameStats, transition: GameTransition) -> None:
+    """Responds to key press events and changes the game state."""
     if event.key == pygame.K_q:
         sys.exit()
     if event.key == pygame.K_SPACE or event.key == pygame.K_UP:

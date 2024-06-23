@@ -1,7 +1,7 @@
 class GameStats:
     """A class to store the game stats."""
     GET_READY, ACTIVE = 0, 1
-    GAME_OVER, END = 2, 3
+    GAME_OVER, END    = 2, 3
 
     def __init__(self):
         """Initialize the game stats."""

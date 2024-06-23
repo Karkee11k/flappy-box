@@ -11,7 +11,7 @@ from settings import Settings
 
 
 class GameTransition:
-    """"""
+    """A class to control game logic in different game states."""
 
     def __init__(self, screen: pygame.SurfaceType, settings: Settings, stats: GameStats):
         """Initializes the game transition instance."""
@@ -30,7 +30,6 @@ class GameTransition:
         self.pipesQueue = deque()
         self.pq = MinPQ()
         self.stats.reset()
-        self.settings.initializeDynamicSettings()
     
 
     def gameStart(self) -> None:

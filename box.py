@@ -4,6 +4,7 @@ from itertools import cycle
 from background import Background
 from settings import Settings
 
+
 class Box:
     """A class to represent the box."""
 
@@ -23,6 +24,8 @@ class Box:
         self._cycle = cycle([0, 1, 2, 1])
         self._index = self._iter = 0
         self._height = self._images[0].get_height()
+        self._boxVelocity = settings.boxVelocity
+        self._boxRotation = settings.boxRotation
         self._centery = self.y = self.rect.y
         self._direction = -1
 
@@ -42,7 +45,7 @@ class Box:
         self._increaseVelocity()
         if self.flapped: self._flap()
         self._rotate()
-        self.y += min(self._settings.boxVelocity, self._bottom - self._height - self.y)
+        self.y += min(self._boxVelocity, self._bottom - self._height - self.y)
         self.rect.y = max(0, self.y)
 
 
@@ -57,10 +60,10 @@ class Box:
 
 
     def _rotate(self) -> None:
-        """Rotates the box."""
-        if self._settings.boxRotation > -90:
-            self._settings.boxRotation -= self._settings.rotationVelocity
-        angle = min(self._settings.boxRotation, self._settings.rotationThreshold)
+        """Rotates the box based on its velocity and caches the rotated images."""
+        if self._boxRotation > -90:
+            self._boxRotation -= self._settings.rotationVelocity
+        angle = min(self._boxRotation, self._settings.rotationThreshold)
 
         # caching the image and rect
         if angle not in self._cache[self._index]:
@@ -83,13 +86,13 @@ class Box:
     def _increaseVelocity(self) -> None:
         """Increases the box velocity."""
         if self.flapped: return
-        if self._settings.boxVelocity < self._settings.boxMaxVelocity:
-            self._settings.boxVelocity += self._settings.boxAcceleration
+        if self._boxVelocity < self._settings.boxMaxVelocity:
+            self._boxVelocity += self._settings.boxAcceleration
 
 
     def _flap(self) -> None:
         """Flaps the bird."""
-        self._settings.boxVelocity = self._settings.flapAcceleration
+        self._boxVelocity = self._settings.flapAcceleration
         self._settings.sound['flap'].play()
-        self._settings.boxRotation = 45
+        self._boxRotation = 45
         self.flapped = False
